@@ -31,7 +31,7 @@ echo "==> mounting ${ROOT_PARTITION} to ${TARGET_DIR}"
 /usr/bin/mount -o noatime,errors=remount-ro ${ROOT_PARTITION} ${TARGET_DIR}
 
 echo '==> bootstrapping the base installation'
-/usr/bin/pacstrap ${TARGET_DIR} base base-devel gptfdisk openssh syslinux python2
+/usr/bin/pacstrap ${TARGET_DIR} base base-devel gptfdisk openssh syslinux python2 virtualbox-guest-utils
 /usr/bin/arch-chroot ${TARGET_DIR} syslinux-install_update -i -a -m
 /usr/bin/sed -i 's/sda3/sda1/' "${TARGET_DIR}/boot/syslinux/syslinux.cfg"
 /usr/bin/sed -i 's/TIMEOUT 50/TIMEOUT 5/' "${TARGET_DIR}/boot/syslinux/syslinux.cfg"
@@ -66,6 +66,7 @@ cat <<-EOF > "${TARGET_DIR}${CONFIG_SCRIPT}"
 	/usr/bin/curl --output /home/vagrant/.ssh/authorized_keys https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub
 	/usr/bin/chown vagrant:users /home/vagrant/.ssh/authorized_keys
 	/usr/bin/chmod 0600 /home/vagrant/.ssh/authorized_keys
+        echo -e 'vboxguest\nvboxsf\nvboxvideo' > /etc/modules-load.d/virtualbox.conf
 
 	# clean up
 	/usr/bin/pacman -Rcns --noconfirm gptfdisk
