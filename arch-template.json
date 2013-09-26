@@ -8,7 +8,7 @@
     "boot_wait": "5s",
     "boot_command": [
       "<enter><wait10><wait5>",
-      "/usr/bin/curl -O https://raw.github.com/patmcnally/packer-arch/master/install.sh<enter><wait5>",
+      "/usr/bin/curl -O https://raw.github.com/lydgate/packer-arch/master/install.sh<enter><wait5>",
       "/usr/bin/bash ./install.sh<enter>"
       ],
       "disk_size": 20480,
