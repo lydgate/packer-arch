@@ -1,20 +1,22 @@
 {
-  "builders": [ {
-    "type": "virtualbox",
-    "guest_os_type": "ArchLinux_64",
-    "iso_url":"http://mirrors.kernel.org/archlinux/iso/2013.09.01/archlinux-2013.09.01-dual.iso",
-    "iso_checksum": "3b087acd273656c55244baa7b7f1a147be7da990",
-    "iso_checksum_type": "sha1",
-    "boot_wait": "5s",
-    "boot_command": [
-      "<enter><wait10><wait5>",
-      "/usr/bin/curl -O https://raw.github.com/lydgate/packer-arch/master/install.sh<enter><wait5>",
-      "/usr/bin/bash ./install.sh<enter>"
-      ],
-      "disk_size": 20480,
-      "ssh_username": "root",
-      "ssh_password": "vagrant",
-      "shutdown_command": "systemctl poweroff"
-  } ],
-  "post-processors": [ "vagrant" ]
+    "builders": [
+        {
+            "type": "virtualbox",
+            "guest_os_type": "ArchLinux_64",
+            "iso_url":"http://mirrors.kernel.org/archlinux/iso/2013.09.01/archlinux-2013.09.01-dual.iso",
+            "iso_checksum": "3b087acd273656c55244baa7b7f1a147be7da990",
+            "iso_checksum_type": "sha1",
+            "boot_wait": "5s",
+            "boot_command": [
+                "<enter><wait10><wait5>",
+                "/usr/bin/curl -O https://raw.github.com/lydgate/packer-arch/master/install.sh<enter><wait5>",
+                "/usr/bin/bash ./install.sh<enter>"
+            ],
+            "disk_size": 20480,
+            "ssh_username": "root",
+            "ssh_password": "vagrant",
+            "shutdown_command": "systemctl poweroff"
+       	}
+    ],
+    "post-processors": [ "vagrant" ]
 }
