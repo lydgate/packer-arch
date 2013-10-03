@@ -60,6 +60,13 @@ Then you can import the generated box into Vagrant:
 
     $ vagrant box add arch packer_arch_vmware.box
 
+### Local ISO
+
+If you don't want to download the Arch Linux ISO file every time, you can
+specify the iso_url variable on the command line to point packer to a local copy:
+
+    $ packer build -var 'iso_url=/path/to/archlinux.iso' arch-template.json
+
 Known Issues
 ------------
 
