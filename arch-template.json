@@ -1,22 +1,49 @@
 {
+    "variables": {
+        "iso_url": "http://mirrors.kernel.org/archlinux/iso/2013.09.01/archlinux-2013.09.01-dual.iso",
+        "iso_checksum": "3b087acd273656c55244baa7b7f1a147be7da990",
+        "iso_checksum_type": "sha1"
+    },
     "builders": [
         {
             "type": "virtualbox",
+            "iso_url": "{{user `iso_url`}}",
+            "iso_checksum": "{{user `iso_checksum`}}",
+            "iso_checksum_type": "{{user `iso_checksum_type`}}",
             "guest_os_type": "ArchLinux_64",
-            "iso_url":"http://mirrors.kernel.org/archlinux/iso/2013.09.01/archlinux-2013.09.01-dual.iso",
-            "iso_checksum": "3b087acd273656c55244baa7b7f1a147be7da990",
-            "iso_checksum_type": "sha1",
+            "guest_additions_attach": "true",
             "boot_wait": "5s",
             "boot_command": [
-                "<enter><wait10><wait5>",
-                "/usr/bin/curl -O https://raw.github.com/lydgate/packer-arch/master/install.sh<enter><wait5>",
-                "/usr/bin/bash ./install.sh<enter>"
+                "<enter><wait10><wait10>",
+                "/usr/bin/curl -O https://raw.github.com/elasticdog/packer-arch/master/install-virtualbox.sh<enter><wait5>",
+                "/usr/bin/bash ./install-virtualbox.sh<enter>"
             ],
             "disk_size": 20480,
             "ssh_username": "root",
             "ssh_password": "vagrant",
-            "shutdown_command": "systemctl poweroff"
-       	}
+            "shutdown_command": "systemctl start poweroff.timer"
+        },
+        {
+            "type": "vmware",
+            "iso_url": "{{user `iso_url`}}",
+            "iso_checksum": "{{user `iso_checksum`}}",
+            "iso_checksum_type": "{{user `iso_checksum_type`}}",
+            "boot_wait": "5s",
+            "boot_command": [
+                "<enter><wait10><wait10>",
+                "/usr/bin/curl -O https://raw.github.com/elasticdog/packer-arch/master/install-vmware.sh<enter><wait5>",
+                "/usr/bin/bash ./install-vmware.sh<enter>"
+            ],
+            "disk_size": 20480,
+            "ssh_username": "root",
+            "ssh_password": "vagrant",
+            "shutdown_command": "systemctl start poweroff.timer"
+        }
     ],
-    "post-processors": [ "vagrant" ]
+    "post-processors": [
+        {
+            "type": "vagrant",
+            "output": "packer_arch_{{.Provider}}.box"
+        }
+    ]
 }
